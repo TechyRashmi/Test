@@ -36,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
            if(isNetworkConnected())
             {
                 //call webservice
-                new UpdateTask().execute();
+                new HTTPRequest().execute("https://codejudge-artifacts.s3.amazonaws.com/images/q-110/data.json");
+
+
             }
            else
            {
@@ -50,27 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private class UpdateTask extends AsyncTask<String, String,String> {
-        protected String doInBackground(String... urls) {
 
-            OkHttpClient client = new OkHttpClient().newBuilder()
-                    .build();
-            Request request = new Request.Builder()
-                    .url("https://codejudge-artifacts.s3.amazonaws.com/images/q-110/data.json")
-                    .method("GET", null)
-                    .build();
-            Response response = null;
-            try {
-                response = client.newCall(request).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Log.e("resss",  ""+response.message());
-
-            return null;
-        }
-
-    }
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
